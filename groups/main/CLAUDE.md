@@ -31,22 +31,6 @@ When you learn something important:
 - Add recurring context directly to this CLAUDE.md
 - Always index new memory files at the top of CLAUDE.md
 
-## Ops Access
-
-You have access to operations data at `/workspace/extra/example-ops/` with these key areas:
-
-- **sales/** - Pipeline, deals, playbooks, pitch materials (see `sales/CLAUDE.md`)
-- **clients/** - Active accounts, service delivery, client management (see `clients/CLAUDE.md`)
-- **company/** - Strategy, thesis, operational philosophy (see `company/CLAUDE.md`)
-
-Read the CLAUDE.md files in each folder for role-specific context and workflows.
-
-**Key context:**
-- Example company description
-- Pricing details (redacted)
-- Team: Team members (redacted)
-- Obsidian-based workflow with Kanban boards (PIPELINE.md, PORTFOLIO.md)
-
 ## WhatsApp Formatting
 
 Do NOT use markdown headings (##) in WhatsApp messages. Only use:
@@ -171,7 +155,7 @@ Groups can have extra directories mounted. Add `containerConfig` to their entry:
     "containerConfig": {
       "additionalMounts": [
         {
-          "hostPath": "/Users/gavriel/projects/webapp",
+          "hostPath": "~/projects/webapp",
           "containerPath": "webapp",
           "readonly": false
         }
