@@ -63,6 +63,29 @@ server.tool(
 );
 
 server.tool(
+  'send_image',
+  'Send an image file to the user or group. Use this to share charts, photos, or other images. The path must be accessible on the host filesystem (e.g. /workspace/project/data/visualizations/chart.png).',
+  {
+    imagePath: z.string().describe('Absolute path to the image file on the host (e.g. /workspace/project/data/visualizations/1_top_artists.png)'),
+    caption: z.string().optional().describe('Optional caption to include with the image'),
+  },
+  async (args) => {
+    const data: Record<string, string | undefined> = {
+      type: 'image',
+      chatJid,
+      imagePath: args.imagePath,
+      caption: args.caption || undefined,
+      groupFolder,
+      timestamp: new Date().toISOString(),
+    };
+
+    writeIpcFile(MESSAGES_DIR, data);
+
+    return { content: [{ type: 'text' as const, text: 'Image queued for sending.' }] };
+  },
+);
+
+server.tool(
   'schedule_task',
   `Schedule a recurring or one-time task. The task will run as a full agent with access to all tools. Returns the task ID for future reference. To modify an existing task, use update_task instead.
 
@@ -303,7 +326,7 @@ server.tool(
 
 Use available_groups.json to find the JID for a group. The folder name must be channel-prefixed: "{channel}_{group-name}" (e.g., "whatsapp_family-chat", "telegram_dev-team", "discord_general"). Use lowercase with hyphens for the group name part.`,
   {
-    jid: z.string().describe('The chat JID (e.g., "120363336345536173@g.us", "tg:-1001234567890", "dc:1234567890123456")'),
+    jid: z.string().describe('The chat JID (e.g., "123456789012345678@g.us", "tg:-1001234567890", "dc:1234567890123456")'),
     name: z.string().describe('Display name for the group'),
     folder: z.string().describe('Channel-prefixed folder name (e.g., "whatsapp_family-chat", "telegram_dev-team")'),
     trigger: z.string().describe('Trigger word (e.g., "@Andy")'),
